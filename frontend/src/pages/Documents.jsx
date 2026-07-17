@@ -17,12 +17,12 @@ export default function Documents() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getProducts().then(res => setProducts(res.data));
+    getProducts().then(data => setProducts(data || []));
   }, []);
 
   useEffect(() => {
     if (selectedProduct) {
-      getDocuments(selectedProduct).then(res => setDocuments(res.data));
+      getDocuments(selectedProduct).then(data => setDocuments(data || []));
     }
   }, [selectedProduct]);
 
@@ -36,18 +36,18 @@ export default function Documents() {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('product_id', selectedProduct);
-        await axios.post('http://localhost:5000/documents/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        await axios.post('http://localhost:5000/api/v1/documents/upload', formData, {
+  headers: { 'Content-Type': 'multipart/form-data' }
+});
       } else {
         if (!content) return alert('Enter some content');
-        await axios.post('http://localhost:5000/documents/upload', {
+        await axios.post('http://localhost:5000/api/v1/documents/upload', {
           product_id: parseInt(selectedProduct), content
         });
       }
       setContent('');
       setFile(null);
-      getDocuments(selectedProduct).then(res => setDocuments(res.data));
+      getDocuments(selectedProduct).then(data => setDocuments(data || []));
     } catch (e) {
       alert('Upload failed');
     }

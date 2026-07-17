@@ -21,7 +21,7 @@ export default function Products() {
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const load = () => getProducts().then(res => setProducts(res.data));
+  const load = () => getProducts().then(data => setProducts(data || []));
   useEffect(() => { load(); }, []);
 
   const handleSubmit = async () => {

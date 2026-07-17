@@ -15,12 +15,12 @@ export default function Sales() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    getProducts().then(res => setProducts(res.data));
+    getProducts().then(data => setProducts(data || []));
   }, []);
 
   useEffect(() => {
     if (selectedProduct) {
-      getSalesForProduct(selectedProduct).then(res => setSales(res.data));
+      getSalesForProduct(selectedProduct).then(data => setSales(data || []));
     }
   }, [selectedProduct]);
 
@@ -30,7 +30,7 @@ export default function Sales() {
     await addSale({ product_id: parseInt(selectedProduct), quantity_sold: parseInt(quantity), sale_date: date || undefined });
     setQuantity('');
     setDate('');
-    getSalesForProduct(selectedProduct).then(res => setSales(res.data));
+    getSalesForProduct(selectedProduct).then(data => setSales(data || []));
     setLoading(false);
   };
 

@@ -4,6 +4,7 @@ import Products from './pages/Products';
 import Sales from './pages/Sales';
 import Documents from './pages/Documents';
 import Forecast from './pages/Forecast';
+import Analytics from './pages/Analytics';
 import './index.css';
 
 function Sidebar() {
@@ -13,6 +14,7 @@ function Sidebar() {
     { to: '/sales', label: 'Log Sale' },
     { to: '/documents', label: 'Documents' },
     { to: '/forecast', label: 'Forecast' },
+    { to: '/analytics', label: 'Analytics' },
   ];
 
   return (
@@ -72,6 +74,7 @@ export default function App() {
           <Route path="/sales" element={<Sales />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/forecast" element={<Forecast />} />
+          <Route path="/analytics" element={<Analytics />} />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -9,7 +9,7 @@ export default function Forecast() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    getProducts().then(res => setProducts(res.data));
+    getProducts().then(data => setProducts(data || []));
   }, []);
 
   const handleForecast = async () => {
@@ -18,8 +18,8 @@ export default function Forecast() {
     setForecast(null);
     setError('');
     try {
-      const res = await getForecast(selectedProduct);
-      setForecast(res.data);
+      const data = await getForecast(selectedProduct);
+      setForecast(data);
     } catch (e) {
       setError(e.response?.data?.message || 'Something went wrong');
     }
@@ -64,12 +64,13 @@ export default function Forecast() {
       {forecast && (
         <div>
           {/* Stats */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px', marginBottom: '24px' }}>
             {[
               { label: 'Current Stock', value: `${forecast.current_stock} units` },
               { label: 'Avg Daily Demand', value: `${forecast.avg_daily_demand.toFixed(1)} units` },
               { label: 'Predicted Weekly', value: `${forecast.predicted_weekly_demand} units` },
               { label: 'Days of Stock Left', value: `${forecast.days_of_stock_remaining} days` },
+              { label: 'AI Confidence', value: `${forecast.confidence_score}%` },
             ].map(stat => (
               <div key={stat.label} style={{
                 background: '#fff', border: '1px solid #e5e5e5',
@@ -78,7 +79,10 @@ export default function Forecast() {
                 <p style={{ fontSize: '11px', color: '#888', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                   {stat.label}
                 </p>
-                <p style={{ fontSize: '20px', fontWeight: '600' }}>{stat.value}</p>
+                <p style={{ fontSize: '20px', fontWeight: '600',color: stat.label === 'AI Confidence' 
+                  ? (forecast.confidence_score >= 70 ? '#2d7a2d' : forecast.confidence_score >= 40 ? '#b8860b' : '#d00')
+                  : '#1a1a1a'
+                }}>{stat.value}</p>
               </div>
             ))}
           </div>

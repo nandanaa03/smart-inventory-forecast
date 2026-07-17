@@ -3,7 +3,6 @@ flask-cors
 psycopg2-binary
 psycopg2-pool
 python-dotenv
-sentence-transformers
 PyPDF2
 pandas
 requests

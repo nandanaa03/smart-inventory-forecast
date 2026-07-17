@@ -36,7 +36,7 @@ export default function Documents() {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('product_id', selectedProduct);
-        await axios.post('http://localhost:5000/api/v1/documents/upload', formData, {
+        await axios.post(`${import.meta.env.VITE_API_URL || ''}/api/v1/documents/upload`, formData, {
   headers: { 'Content-Type': 'multipart/form-data' }
 });
       } else {

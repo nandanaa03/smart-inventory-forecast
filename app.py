@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from db import get_db_connection, release_db_connection
 from rag import store_document, store_file, retrieve_context, generate_recommendation
 from forecast import calculate_forecast
+from flask import send_from_directory
 import os
 
 load_dotenv()
@@ -287,5 +288,11 @@ def health():
 def home():
     return success({"status": "Inventory IQ API", "version": "1.0.0"})
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react(path):
+    if path and os.path.exists(os.path.join('static', path)):
+        return send_from_directory('static', path)
+    return send_from_directory('static', 'index.html')
 if __name__ == "__main__":
     app.run(debug=True)

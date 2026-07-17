@@ -284,15 +284,17 @@ def forecast(product_id):
 def health():
     return success({"status": "ok", "version": "1.0.0"})
 
-@app.route("/")
-def home():
-    return success({"status": "Inventory IQ API", "version": "1.0.0"})
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve_react(path):
-    if path and os.path.exists(os.path.join('static', path)):
-        return send_from_directory('static', path)
-    return send_from_directory('static', 'index.html')
+    # Don't intercept API routes
+    if path.startswith('api/'):
+        from flask import abort
+        abort(404)
+    static_folder = os.path.join(os.path.dirname(__file__), 'static')
+    if path and os.path.exists(os.path.join(static_folder, path)):
+        return send_from_directory(static_folder, path)
+    return send_from_directory(static_folder, 'index.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

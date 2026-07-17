@@ -75,6 +75,7 @@ export default function Documents() {
           <select value={selectedProduct} onChange={e => setSelectedProduct(e.target.value)}
             style={{ ...inputStyle, marginBottom: '12px' }}>
             <option value="">Select product</option>
+            <option value="0">Global Market Context (all products)</option>
             {products.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
 

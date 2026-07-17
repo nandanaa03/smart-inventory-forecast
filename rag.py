@@ -136,7 +136,7 @@ def retrieve_context(product_id, query, top_k=3):
         """
         SELECT content, 1 - (embedding <=> %s::vector) AS similarity
         FROM documents
-        WHERE product_id = %s
+        WHERE product_id = %s OR product_id = 0
         ORDER BY similarity DESC
         LIMIT %s;
         """,

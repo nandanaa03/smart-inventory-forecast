@@ -5,7 +5,7 @@ import requests
 import pandas as pd
 import PyPDF2
 from sentence_transformers import SentenceTransformer
-from db import get_db_connection
+from db import get_db_connection, release_db_connection
 
 embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -115,7 +115,7 @@ def store_document(product_id, content, filename="manual_upload"):
         )
     conn.commit()
     cur.close()
-    conn.close()
+    release_db_connection(conn)
     return len(chunks)
 
 def store_file(product_id, file_bytes, filename):
@@ -144,7 +144,7 @@ def retrieve_context(product_id, query, top_k=3):
     )
     rows = cur.fetchall()
     cur.close()
-    conn.close()
+    release_db_connection(conn)
     return [{"content": r[0], "similarity": round(float(r[1]), 4)} for r in rows]
 
 def generate_recommendation(product_name, current_stock, avg_daily_demand,

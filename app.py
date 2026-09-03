@@ -274,6 +274,8 @@ def forecast(product_id):
             "recommendation": recommendation
         })
     except Exception as e:
+        import traceback
+        print(traceback.format_exc())
         return error(str(e), 500)
     finally:
         release_db_connection(conn)

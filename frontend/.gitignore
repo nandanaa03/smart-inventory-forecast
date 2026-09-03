@@ -23,15 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-# Python
-__pycache__/
-*.py[cod]
-venv/
-.env
-
-# Python virtual environments
-.venv/
-env/
-
-# Python cache
-.pytest_cache/

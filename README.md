@@ -6,7 +6,7 @@ A full-stack inventory management system with AI-powered restocking recommendati
 
 ## Live Demo
 
-[inventory-iq.onrender.com](https://inventory-iq.onrender.com)
+[https://smart-inventory-forecast-wil6.onrender.com](https://smart-inventory-forecast-wil6.onrender.com)
 
 ---
 
